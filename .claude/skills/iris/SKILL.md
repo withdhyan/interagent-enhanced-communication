@@ -1,19 +1,19 @@
 ---
-name: hermes
-description: Encode or decode Hermes protocol packets for centaur-to-centaur communication. Use when the user wants to send a structured semantic message to another human+AI system, or decode an incoming Hermes packet. Trigger on keywords like "hermes", "encode", "decode", "send packet", "centaur message".
+name: iris
+description: Encode or decode Iris protocol packets for centaur-to-centaur communication. Use when the user wants to send a structured semantic message to another human+AI system, or decode an incoming Iris packet. Trigger on keywords like "iris", "encode", "decode", "send packet", "centaur message".
 allowed-tools: Bash Read Write Edit
 ---
 
-# Hermes Protocol — Claude Code Skill
+# Iris Protocol — Claude Code Skill
 
-You are the Hermes agent — a messenger between centaur systems (human+AI hybrids).
+You are the Iris agent — a messenger between centaur systems (human+AI hybrids).
 
 ## Commands
 
-The user invokes `/hermes` with one of these modes:
+The user invokes `/iris` with one of these modes:
 
-### `/hermes encode <message>`
-Convert the user's natural language intent into a Hermes protocol packet.
+### `/iris encode <message>`
+Convert the user's natural language intent into a Iris protocol packet.
 
 1. Parse the user's message to extract:
    - **Key concepts** (become nodes with stems)
@@ -24,10 +24,10 @@ Convert the user's natural language intent into a Hermes protocol packet.
    - **Intent**: `inform`, `request`, `propose`, `challenge`, `acknowledge`
    - **Sources** if any are mentioned
 
-2. Output a valid Hermes JSON packet following this structure:
+2. Output a valid Iris JSON packet following this structure:
 ```json
 {
-  "hermes": "0.1",
+  "iris": "0.1",
   "id": "<uuid>",
   "timestamp": "<ISO-8601>",
   "from": { "agent": "claude-code", "human": "<user>" },
@@ -45,8 +45,8 @@ Convert the user's natural language intent into a Hermes protocol packet.
 
 3. Also show a human-readable summary of what was encoded.
 
-### `/hermes decode`
-Decode a Hermes JSON packet (from clipboard, file, or pasted input) into natural language.
+### `/iris decode`
+Decode a Iris JSON packet (from clipboard, file, or pasted input) into natural language.
 
 1. Parse the JSON packet
 2. Output a clear summary:
@@ -56,8 +56,8 @@ Decode a Hermes JSON packet (from clipboard, file, or pasted input) into natural
    - Sources cited
    - Whether a response is expected
 
-### `/hermes diff <packet1> <packet2>`
-Compare two Hermes packets and show:
+### `/iris diff <packet1> <packet2>`
+Compare two Iris packets and show:
 - Concepts that agree/disagree
 - Relationships that conflict
 - Epistemic mode mismatches (one says fact, other says hypothesis)

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Benchmark: NousResearch Hermes Agent Format vs Our Hermes Protocol
+Benchmark: NousResearch Iris Agent Format vs Our Iris Protocol
 
 Compares the same communication scenarios encoded in:
 1. NousResearch Hermes format (ChatML + tool_call/tool_response)
-2. Our Hermes Protocol (semantic hypergraph packets)
+2. Our Iris Protocol (semantic hypergraph packets)
 3. Plain English (baseline)
 
 Metrics:
@@ -23,7 +23,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from src.packet import (
-    Context, Direction, Edge, EdgeType, HermesPacket,
+    Context, Direction, Edge, EdgeType, IrisPacket,
     Identity, Intent, Meta, Mode, Node, Valence,
 )
 from src.encoder import encode_programmatic, to_json
@@ -391,11 +391,11 @@ def _build_challenge_packet():
 
 def run_benchmark():
     print("=" * 72)
-    print("HEAD-TO-HEAD: NousResearch Hermes Agent vs Our Hermes Protocol")
+    print("HEAD-TO-HEAD: NousResearch Iris Agent vs Our Iris Protocol")
     print("=" * 72)
     print()
     print("NousResearch Hermes = ChatML + <tool_call> + send_message(text)")
-    print("Our Hermes Protocol = Semantic hypergraph packets (JSON)")
+    print("Our Iris Protocol = Semantic hypergraph packets (JSON)")
     print("Plain English = Baseline natural language")
     print()
 
@@ -496,9 +496,9 @@ def run_benchmark():
     print("     Our protocol captures polyadic relationships natively.")
     print()
     print("  4. COMPLEMENTARY USE: NousResearch Hermes is a TOOL CALLING framework")
-    print("     (how to invoke functions). Our Hermes Protocol is a SEMANTIC format")
+    print("     (how to invoke functions). Our Iris Protocol is a SEMANTIC format")
     print("     (what to say). They solve different problems and can be combined:")
-    print("     a NousResearch Hermes agent could use send_hermes_packet() as a tool.")
+    print("     a NousResearch Hermes agent could use send_iris_packet() as a tool.")
     print()
     print("  5. ROUND-TRIP FIDELITY: When our protocol is decoded, the receiver's AI")
     print("     can distinguish facts from hypotheses, strong claims from weak ones,")

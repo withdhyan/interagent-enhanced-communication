@@ -1,4 +1,4 @@
-"""Hermes encoder: converts natural language intent into a Hermes packet.
+"""Iris encoder: converts natural language intent into a Iris packet.
 
 In production, this would use an LLM to extract the semantic graph from
 free-form human input. This reference implementation provides both a
@@ -15,7 +15,7 @@ from .packet import (
     Direction,
     Edge,
     EdgeType,
-    HermesPacket,
+    IrisPacket,
     Identity,
     Intent,
     Meta,
@@ -52,13 +52,13 @@ def encode_programmatic(
     priority: float = 0.5,
     thread_id: str | None = None,
     in_reply_to: str | None = None,
-) -> HermesPacket:
-    """Build a Hermes packet from structured inputs."""
+) -> IrisPacket:
+    """Build a Iris packet from structured inputs."""
     meta = Meta(
         thread_id=thread_id or Meta().thread_id,
         in_reply_to=in_reply_to,
     )
-    return HermesPacket(
+    return IrisPacket(
         sender=sender,
         receiver=receiver,
         intent=intent,
@@ -130,8 +130,8 @@ def encode_natural(
     text: str,
     sender: Identity,
     receiver: Identity,
-) -> HermesPacket:
-    """Encode natural language into a Hermes packet.
+) -> IrisPacket:
+    """Encode natural language into a Iris packet.
 
     This is a simplified demonstration. In production, you would call an LLM
     to extract the semantic graph, epistemic modes, and relationships.
@@ -187,7 +187,7 @@ def encode_natural(
             relator=f"Composite relationship across {', '.join(n.stem for n in nodes)}",
         ))
 
-    return HermesPacket(
+    return IrisPacket(
         sender=sender,
         receiver=receiver,
         intent=intent,
@@ -197,6 +197,6 @@ def encode_natural(
     )
 
 
-def to_json(packet: HermesPacket, indent: int = 2) -> str:
+def to_json(packet: IrisPacket, indent: int = 2) -> str:
     """Serialize a packet to JSON."""
     return json.dumps(packet.to_dict(), indent=indent)

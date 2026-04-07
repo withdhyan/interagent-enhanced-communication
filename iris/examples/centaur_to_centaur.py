@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Example: Centaur-to-Centaur communication via Hermes.
+Example: Centaur-to-Centaur communication via Iris.
 
 This demonstrates the full flow:
   1. Alice tells her AI what she wants to communicate (natural language)
-  2. Alice's AI encodes it into a Hermes packet (structured hypergraph)
+  2. Alice's AI encodes it into a Iris packet (structured hypergraph)
   3. The packet is transmitted (JSON over any transport)
   4. Bob's AI decodes the packet back into natural language for Bob
 
@@ -21,7 +21,7 @@ from src.packet import (
     Direction,
     Edge,
     EdgeType,
-    HermesPacket,
+    IrisPacket,
     Identity,
     Intent,
     Meta,
@@ -110,7 +110,7 @@ def demo_programmatic():
     print(wire_json[:300] + "..." if len(wire_json) > 300 else wire_json)
 
     # === BOB'S SIDE ===
-    received = HermesPacket.from_dict(packet.to_dict())
+    received = IrisPacket.from_dict(packet.to_dict())
     human_output = decode_to_natural_language(received)
 
     print("\n--- Bob's AI tells Bob ---")
@@ -144,7 +144,7 @@ def demo_natural_language():
     print(f"\n--- On the wire ({len(wire_json)} bytes) ---")
     print(wire_json[:300] + "..." if len(wire_json) > 300 else wire_json)
 
-    received = HermesPacket.from_dict(packet.to_dict())
+    received = IrisPacket.from_dict(packet.to_dict())
     human_output = decode_to_natural_language(received)
 
     print("\n--- Bob's AI tells Bob ---")

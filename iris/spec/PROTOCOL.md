@@ -1,13 +1,13 @@
-# Hermes Protocol Specification v0.1
+# Iris Protocol Specification v0.1
 
-## What is Hermes?
+## What is Iris?
 
-Hermes is a structured message protocol for **centaur-to-centaur communication** — where each centaur is a human+AI hybrid system.
+Iris is a structured message protocol for **centaur-to-centaur communication** — where each centaur is a human+AI hybrid system.
 
-The core insight: when two centaurs communicate, the AI on each side can handle compression and decompression. The human never needs to learn a new syntax. They speak naturally to their own AI, and Hermes handles the high-bandwidth transfer between agents.
+The core insight: when two centaurs communicate, the AI on each side can handle compression and decompression. The human never needs to learn a new syntax. They speak naturally to their own AI, and Iris handles the high-bandwidth transfer between agents.
 
 ```
-Human A  -->  AI Agent A  --[Hermes Packet]-->  AI Agent B  -->  Human B
+Human A  -->  AI Agent A  --[Iris Packet]-->  AI Agent B  -->  Human B
  (intent)     (encode)        (structured)       (decode)      (natural language)
 ```
 
@@ -21,11 +21,11 @@ Human A  -->  AI Agent A  --[Hermes Packet]-->  AI Agent B  -->  Human B
 
 ## Packet Structure
 
-A Hermes packet is a JSON object with these top-level fields:
+A Iris packet is a JSON object with these top-level fields:
 
 ```json
 {
-  "hermes": "0.1",
+  "iris": "0.1",
   "id": "uuid-v4",
   "timestamp": "ISO-8601",
   "from": { "agent": "claude-3", "human": "alice" },
@@ -184,18 +184,18 @@ Alice: "Tell Bob that climate reform and economic growth are in tension,
         but carbon capture might bridge both. Link the IPCC AR6 data.
         This is my hypothesis, not settled fact."
 
-Alice's AI (Hermes encoder):
+Alice's AI (Iris encoder):
   - Extracts 3 nodes: climate-reform, economic-growth, carbon-capture
   - Tags mode: projection (hypothesis)
   - Creates tension edge between n1-n2, emergence hyperedge across n1-n2-n3
   - Attaches IPCC transclusion
-  - Sends Hermes packet to Bob's AI
+  - Sends Iris packet to Bob's AI
 ```
 
 ### Receiving (Bob's side)
 
 ```
-Bob's AI (Hermes decoder):
+Bob's AI (Iris decoder):
   "Alice shared a hypothesis: climate reform and economic growth
    are in tension (high confidence), but she sees carbon capture
    as a potential bridge (moderate confidence). She's referencing
@@ -218,7 +218,7 @@ Alice didn't learn any new syntax. Bob didn't either. The protocol lives between
 | Plain English | None | Low | None |
 | Caveman (compressed English) | None | Medium | None |
 | Centaur-OS Loom notation | High | High | Very High |
-| **Hermes Protocol** | **None** | **High** | **Low (requires AI on both sides)** |
+| **Iris Protocol** | **None** | **High** | **Low (requires AI on both sides)** |
 
 ## Next Steps
 

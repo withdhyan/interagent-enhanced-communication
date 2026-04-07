@@ -1,7 +1,7 @@
-"""Hermes decoder: converts a Hermes packet into human-readable output.
+"""Iris decoder: converts a Iris packet into human-readable output.
 
 The decoder is what the receiving centaur's AI uses to "unpack" a
-Hermes packet into natural language, a summary, or a structured view
+Iris packet into natural language, a summary, or a structured view
 that the human can understand.
 """
 
@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 
-from .packet import Direction, EdgeType, HermesPacket, Mode, Valence
+from .packet import Direction, EdgeType, IrisPacket, Mode, Valence
 
 
 def _mode_label(mode: Mode) -> str:
@@ -53,8 +53,8 @@ def _edge_verb(edge_type: EdgeType, direction: Direction) -> str:
     return verbs.get(edge_type, "relates to")
 
 
-def decode_to_natural_language(packet: HermesPacket) -> str:
-    """Decode a Hermes packet into a natural language summary for a human."""
+def decode_to_natural_language(packet: IrisPacket) -> str:
+    """Decode a Iris packet into a natural language summary for a human."""
     sender_name = packet.sender.human or packet.sender.agent
     intent_verb = {
         "inform": "shared an insight",
@@ -119,7 +119,7 @@ def decode_to_natural_language(packet: HermesPacket) -> str:
     return "\n".join(lines)
 
 
-def decode_to_structured(packet: HermesPacket) -> dict:
+def decode_to_structured(packet: IrisPacket) -> dict:
     """Decode a packet into a structured summary dict (for UIs or further processing)."""
     node_map = {n.id: n for n in packet.nodes}
 
@@ -154,6 +154,6 @@ def decode_to_structured(packet: HermesPacket) -> dict:
     }
 
 
-def decode_to_json(packet: HermesPacket, indent: int = 2) -> str:
+def decode_to_json(packet: IrisPacket, indent: int = 2) -> str:
     """Decode a packet into a structured JSON summary."""
     return json.dumps(decode_to_structured(packet), indent=indent)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Benchmark: Plain English vs Hermes Protocol
+Benchmark: Plain English vs Iris Protocol
 
 Measures token efficiency, information density, and structural richness
 across a set of realistic communication scenarios.
@@ -21,7 +21,7 @@ from src.packet import (
     Direction,
     Edge,
     EdgeType,
-    HermesPacket,
+    IrisPacket,
     Identity,
     Intent,
     Mode,
@@ -39,7 +39,7 @@ def approx_tokens(text: str) -> int:
 
 # ============================================================
 # Test scenarios: each has a plain English version and a
-# Hermes packet encoding the same information
+# Iris packet encoding the same information
 # ============================================================
 
 SCENARIOS = []
@@ -227,7 +227,7 @@ def _build_brainstorm_packet():
 # Benchmark runner
 # ============================================================
 
-def count_structural_elements(packet: HermesPacket) -> dict:
+def count_structural_elements(packet: IrisPacket) -> dict:
     """Count the structural richness of a packet."""
     return {
         "concepts": len(packet.nodes),
@@ -284,7 +284,7 @@ def run_benchmark():
     for r in results:
         print(f"\n--- {r['name']} ---")
         print(f"  Plain English:    ~{r['plain_tokens']} tokens")
-        print(f"  Hermes wire:      ~{r['hermes_tokens']} tokens ({r['wire_bytes']} bytes JSON)")
+        print(f"  Iris wire:      ~{r['hermes_tokens']} tokens ({r['wire_bytes']} bytes JSON)")
         print(f"  Decoded output:   ~{r['decoded_tokens']} tokens")
         print(f"  Decoded savings:  {(1 - r['decoded_tokens'] / r['plain_tokens']) * 100:.0f}% fewer tokens than plain English")
         print(f"  Structure:        {r['structure']['concepts']} concepts, "
@@ -301,18 +301,18 @@ def run_benchmark():
     print(f"{'=' * 70}")
     print(f"  Scenarios tested:          {len(SCENARIOS)}")
     print(f"  Total plain English:       ~{total_plain_tokens} tokens")
-    print(f"  Total Hermes decoded:      ~{total_decoded_tokens} tokens")
+    print(f"  Total Iris decoded:      ~{total_decoded_tokens} tokens")
     print(f"  Overall token savings:     {(1 - total_decoded_tokens / total_plain_tokens) * 100:.0f}%")
     print()
 
-    # What Hermes adds that plain English doesn't
-    print("STRUCTURAL ADVANTAGES (what Hermes encodes that plain English doesn't):")
+    # What Iris adds that plain English doesn't
+    print("STRUCTURAL ADVANTAGES (what Iris encodes that plain English doesn't):")
     print(f"  {'Scenario':<35} {'Modes':<8} {'Edge Types':<12} {'Hyperedges':<12} {'Sources'}")
     for r in results:
         s = r['structure']
         print(f"  {r['name']:<35} {s['epistemic_modes']:<8} {s['edge_types']:<12} {s['hyperedges']:<12} {s['sources']}")
 
-    print(f"\n  Key insight: Hermes packets carry typed relationships, epistemic markers,")
+    print(f"\n  Key insight: Iris packets carry typed relationships, epistemic markers,")
     print(f"  and source transclusions that plain English buries in prose or omits entirely.")
 
 

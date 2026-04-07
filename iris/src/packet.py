@@ -1,4 +1,4 @@
-"""Hermes packet data structures."""
+"""Iris packet data structures."""
 
 from __future__ import annotations
 
@@ -139,8 +139,8 @@ class Meta:
 
 
 @dataclass
-class HermesPacket:
-    """A single Hermes protocol message."""
+class IrisPacket:
+    """A single Iris protocol message."""
 
     sender: Identity
     receiver: Identity
@@ -172,7 +172,7 @@ class HermesPacket:
 
     def to_dict(self) -> dict:
         return {
-            "hermes": "0.1",
+            "iris": "0.1",
             "id": self.id,
             "timestamp": self.timestamp,
             "from": self.sender.to_dict(),
@@ -188,7 +188,7 @@ class HermesPacket:
         }
 
     @classmethod
-    def from_dict(cls, data: dict) -> HermesPacket:
+    def from_dict(cls, data: dict) -> IrisPacket:
         """Reconstruct a packet from its dict representation."""
         nodes = [
             Node(

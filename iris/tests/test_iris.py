@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the Hermes protocol implementation."""
+"""Tests for the Iris protocol implementation."""
 
 import json
 import sys
@@ -12,7 +12,7 @@ from src.packet import (
     Direction,
     Edge,
     EdgeType,
-    HermesPacket,
+    IrisPacket,
     Identity,
     Intent,
     Meta,
@@ -56,7 +56,7 @@ def test_packet_to_dict_and_back():
     alice = Identity(agent="claude", human="Alice")
     bob = Identity(agent="gemini", human="Bob")
 
-    packet = HermesPacket(
+    packet = IrisPacket(
         sender=alice,
         receiver=bob,
         intent=Intent.INFORM,
@@ -68,7 +68,7 @@ def test_packet_to_dict_and_back():
     packet.add_context("NREL Report", "Solar penetration above 30% requires grid upgrades", supports_nodes=[n1.id])
 
     d = packet.to_dict()
-    assert d["hermes"] == "0.1"
+    assert d["iris"] == "0.1"
     assert d["from"]["human"] == "Alice"
     assert d["to"]["agent"] == "gemini"
     assert d["intent"] == "inform"
@@ -77,7 +77,7 @@ def test_packet_to_dict_and_back():
     assert len(d["context"]) == 1
 
     # Round-trip
-    restored = HermesPacket.from_dict(d)
+    restored = IrisPacket.from_dict(d)
     assert restored.sender.human == "Alice"
     assert restored.nodes[0].stem == "solar-energy"
     assert restored.edges[0].relator == "Intermittency risk"
@@ -95,7 +95,7 @@ def test_json_serialization():
     )
     j = to_json(packet)
     parsed = json.loads(j)
-    assert parsed["hermes"] == "0.1"
+    assert parsed["iris"] == "0.1"
     assert parsed["intent"] == "propose"
     print("  PASS: test_json_serialization")
 
@@ -151,7 +151,7 @@ def test_decode_to_natural_language():
     alice = Identity(agent="claude", human="Alice")
     bob = Identity(agent="gemini", human="Bob")
 
-    packet = HermesPacket(sender=alice, receiver=bob, intent=Intent.INFORM)
+    packet = IrisPacket(sender=alice, receiver=bob, intent=Intent.INFORM)
     n1 = packet.add_node("renewable-energy", mode=Mode.MANIFEST, amplitude=0.8,
                           definition="Solar and wind power")
     n2 = packet.add_node("cost-reduction", mode=Mode.PROJECTION, amplitude=0.6,
@@ -171,7 +171,7 @@ def test_decode_to_structured():
     alice = Identity(agent="claude", human="Alice")
     bob = Identity(agent="gemini", human="Bob")
 
-    packet = HermesPacket(sender=alice, receiver=bob, intent=Intent.CHALLENGE)
+    packet = IrisPacket(sender=alice, receiver=bob, intent=Intent.CHALLENGE)
     n1 = packet.add_node("claim-a", definition="Some claim")
     packet.add_context("Paper X", "Contradicts claim A", supports_nodes=[n1.id])
 
@@ -189,7 +189,7 @@ def test_hyperedge_three_plus_nodes():
     alice = Identity(agent="claude", human="Alice")
     bob = Identity(agent="gemini", human="Bob")
 
-    packet = HermesPacket(sender=alice, receiver=bob, intent=Intent.INFORM)
+    packet = IrisPacket(sender=alice, receiver=bob, intent=Intent.INFORM)
     n1 = packet.add_node("node-a", definition="A")
     n2 = packet.add_node("node-b", definition="B")
     n3 = packet.add_node("node-c", definition="C")
@@ -201,7 +201,7 @@ def test_hyperedge_three_plus_nodes():
     assert len(d["graph"]["edges"][0]["nodes"]) == 3
 
     # Round-trip
-    restored = HermesPacket.from_dict(d)
+    restored = IrisPacket.from_dict(d)
     assert len(restored.edges[0].nodes) == 3
 
     # Decode handles it
